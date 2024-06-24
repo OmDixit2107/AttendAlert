@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Pentagon
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.attendalert.components.ButtonComponent
+import com.example.attendalert.components.ClickableTextComponent
 import com.example.attendalert.components.DividerTextComp
 import com.example.attendalert.components.HeadingTextComponent
 import com.example.attendalert.components.MyTextField
@@ -25,7 +27,7 @@ import com.example.attendalert.components.PasswordTextField
 
 
 @Composable
-fun SignUpScreen (){
+fun SignUpScreen (onClick: () -> Unit){
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -43,6 +45,7 @@ fun SignUpScreen (){
             MyTextField(label = "Name",ic= Icons.Default.Person)
 //            Spacer(modifier = Modifier.height(20.dp))
             MyTextField(label = "Email", ic = Icons.Default.Email)
+            MyTextField(label = "Semester Number Ex 1,3,5,7", ic = Icons.Default.Pentagon)
 //            Spacer(modifier = Modifier.height(20.dp))
             PasswordTextField(label = "Password", ic = Icons.Default.Lock)
             Spacer(modifier = Modifier.height(20.dp))
@@ -50,14 +53,10 @@ fun SignUpScreen (){
             DividerTextComp()
             Spacer(modifier = Modifier.height(20.dp))
             NormalTextComponent(value = "Already have an account?")
-            NormalTextComponent(value = "Login")
+            ClickableTextComponent(value = "Log In") {
+                onClick();
+            }
         }
 
     }
-}
-
-@Preview
-@Composable
-fun DefPreviewOfSignUpScreen() {
-    SignUpScreen()
 }

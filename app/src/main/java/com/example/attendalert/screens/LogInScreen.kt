@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.attendalert.components.ButtonComponent
+import com.example.attendalert.components.ClickableTextComponent
+import com.example.attendalert.components.DividerTextComp
 import com.example.attendalert.components.HeadingTextComponent
 import com.example.attendalert.components.MyTextField
 import com.example.attendalert.components.NormalTextComponent
@@ -24,7 +26,7 @@ import com.example.attendalert.components.PasswordTextField
 
 
 @Composable
-fun LogInScreen(){
+fun LogInScreen(onClick: () -> Unit = {}){
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -44,6 +46,12 @@ fun LogInScreen(){
             PasswordTextField(label = "Password", ic = Icons.Default.Lock)
             Spacer(modifier = Modifier.height(40.dp))
             ButtonComponent(value = "LOG IN")
+            DividerTextComp()
+            Spacer(modifier = Modifier.height(20.dp))
+            NormalTextComponent(value = "New Here ?")
+            ClickableTextComponent(value = "Sign Up") {
+                onClick();
+            }
         }
 
     }

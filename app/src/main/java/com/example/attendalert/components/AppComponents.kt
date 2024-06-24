@@ -6,6 +6,7 @@ import Primary
 import Secondary
 import TextColor
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -77,8 +78,21 @@ fun HeadingTextComponent(value : String) {
 }
 
 @Composable
-fun ClickableTextComponent (value : String) {
-    Text(text = value)
+fun ClickableTextComponent (value : String,onClick : () -> Unit ) {
+    Text(
+        text = value,
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp)
+            .clickable { onClick() },
+        style = TextStyle(
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Normal
+        ),
+        color = TextColor,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
