@@ -21,6 +21,7 @@ import com.example.attendalert.components.ButtonComponent
 import com.example.attendalert.components.ClickableTextComponent
 import com.example.attendalert.components.DividerTextComp
 import com.example.attendalert.components.HeadingTextComponent
+import com.example.attendalert.components.MyNumberField
 import com.example.attendalert.components.MyTextField
 import com.example.attendalert.components.NormalTextComponent
 import com.example.attendalert.components.PasswordTextField
@@ -45,7 +46,7 @@ fun SignUpScreen (onClick: () -> Unit){
             MyTextField(label = "Name",ic= Icons.Default.Person)
 //            Spacer(modifier = Modifier.height(20.dp))
             MyTextField(label = "Email", ic = Icons.Default.Email)
-            MyTextField(label = "Semester Number Ex 1,3,5,7", ic = Icons.Default.Pentagon)
+            MyNumberField(label = "Semester Number Ex 1,3,5,7", ic = Icons.Default.Pentagon)
 //            Spacer(modifier = Modifier.height(20.dp))
             PasswordTextField(label = "Password", ic = Icons.Default.Lock)
             Spacer(modifier = Modifier.height(20.dp))

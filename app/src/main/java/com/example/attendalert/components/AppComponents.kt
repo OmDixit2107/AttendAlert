@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -132,7 +133,35 @@ fun MyTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
             cursorColor = Primary,
             containerColor = BgColor
         ),
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        singleLine = true,
+        value = textValue.value, // Bind the textValue state
+        onValueChange = { newValue ->
+            textValue.value = newValue
+        },
+        leadingIcon = {
+            Icon(imageVector = (ic), contentDescription = "name")
+        }
+    )
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyNumberField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
+    val textValue = remember { mutableStateOf("") } // Renamed for clarity
+
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(shape = RoundedCornerShape(4.dp)), // Use the provided modifier
+        label = { Text(text = label) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Primary,
+            focusedLabelColor = Primary,
+            cursorColor = Primary,
+            containerColor = BgColor
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next, keyboardType = KeyboardType.NumberPassword),
+        singleLine = true,
         value = textValue.value, // Bind the textValue state
         onValueChange = { newValue ->
             textValue.value = newValue
@@ -159,7 +188,8 @@ fun PasswordTextField(modifier: Modifier = Modifier, label: String, ic: ImageVec
             cursorColor = Primary,
             containerColor = BgColor
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, imeAction = ImeAction.Done),
+        singleLine = true,
         value = password.value,
         onValueChange = { newValue ->
             password.value = newValue
