@@ -23,6 +23,7 @@ import com.example.attendalert.components.HeadingTextComponent
 import com.example.attendalert.components.MyTextField
 import com.example.attendalert.components.NormalTextComponent
 import com.example.attendalert.components.PasswordTextField
+import com.example.attendalert.data.UIEvent
 
 
 @Composable
@@ -41,11 +42,20 @@ fun LogInScreen(onClick: () -> Unit = {}){
             NormalTextComponent(value = "Hey There")
             HeadingTextComponent(value = "Welcome Back")
             Spacer(modifier = Modifier.height(40.dp))
-            MyTextField(label = "Email", ic = Icons.Default.Email)
+            MyTextField(label = "Email", ic = Icons.Default.Email,
+                onTextChanged = {
+
+                })
 //            Spacer(modifier = Modifier.height(20.dp))
-            PasswordTextField(label = "Password", ic = Icons.Default.Lock)
+            PasswordTextField(label = "Password", ic = Icons.Default.Lock,
+                onTextChanged = {
+
+                })
             Spacer(modifier = Modifier.height(40.dp))
-            ButtonComponent(value = "LOG IN")
+            ButtonComponent(value = "LOG IN",
+                onButtonClicked = {
+
+                })
             DividerTextComp()
             Spacer(modifier = Modifier.height(20.dp))
             NormalTextComponent(value = "New Here ?")

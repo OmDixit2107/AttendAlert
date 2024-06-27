@@ -119,7 +119,8 @@ fun DividerTextComp(modifier: Modifier = Modifier) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
+fun MyTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector,
+                onTextChanged: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") } // Renamed for clarity
 
     OutlinedTextField(
@@ -138,6 +139,7 @@ fun MyTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
         value = textValue.value, // Bind the textValue state
         onValueChange = { newValue ->
             textValue.value = newValue
+            onTextChanged(newValue)
         },
         leadingIcon = {
             Icon(imageVector = (ic), contentDescription = "name")
@@ -146,7 +148,8 @@ fun MyTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyNumberField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
+fun MyNumberField(modifier: Modifier = Modifier, label: String, ic: ImageVector,
+                  onTextChanged: (String) -> Unit) {
     val textValue = remember { mutableStateOf("") } // Renamed for clarity
 
     OutlinedTextField(
@@ -165,6 +168,7 @@ fun MyNumberField(modifier: Modifier = Modifier, label: String, ic: ImageVector)
         value = textValue.value, // Bind the textValue state
         onValueChange = { newValue ->
             textValue.value = newValue
+            onTextChanged(newValue)
         },
         leadingIcon = {
             Icon(imageVector = (ic), contentDescription = "name")
@@ -173,7 +177,8 @@ fun MyNumberField(modifier: Modifier = Modifier, label: String, ic: ImageVector)
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector) {
+fun PasswordTextField(modifier: Modifier = Modifier, label: String, ic: ImageVector,
+                      onTextChanged: (String) -> Unit) {
     val password = remember { mutableStateOf("") }
     val passVisible = remember { mutableStateOf(false) } // Renamed for clarity
 
@@ -193,6 +198,7 @@ fun PasswordTextField(modifier: Modifier = Modifier, label: String, ic: ImageVec
         value = password.value,
         onValueChange = { newValue ->
             password.value = newValue
+            onTextChanged(newValue)
         },
         leadingIcon = {
             Icon(imageVector = ic, contentDescription = "leading icon") // More descriptive
@@ -213,9 +219,9 @@ fun PasswordTextField(modifier: Modifier = Modifier, label: String, ic: ImageVec
 }
 
 @Composable
-fun ButtonComponent(value: String) {
+fun ButtonComponent(value: String,onButtonClicked: () -> Unit) {
     Button(
-        onClick = { /*TODO*/ },
+        onClick = { onButtonClicked.invoke() },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
