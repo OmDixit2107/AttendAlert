@@ -1,11 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    kotlin("plugin.serialization") version "1.7.20"
 }
 
 android {
     namespace = "com.example.attendalert"
     compileSdk = 34
+//    compileSdkPreview "VanillaIceCream"
 
     defaultConfig {
         applicationId = "com.example.attendalert"
@@ -62,6 +65,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.0")
     implementation("androidx.compose.material:material-icons-extended-android:1.6.8")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.2")
+    implementation(libs.play.services.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -69,5 +73,22 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+//    implementation("androidx.biometric:biometric:1.2.0-alpha04")
+//    implementation("androidx.credentials:credentials:1.22")
+//    implementation("androidx.credentials:credentials-play-services-auth:1.2.2")
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation ("androidx.credentials:credentials:1.3.0-alpha01")
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
+    implementation(platform("io.github.jan-tennert.supabase:bom:2.5.0"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:1.3.2")
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:1.3.2")
+    implementation("io.ktor:ktor-client-android:2.3.4")
+//    implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>)"
 
 }
