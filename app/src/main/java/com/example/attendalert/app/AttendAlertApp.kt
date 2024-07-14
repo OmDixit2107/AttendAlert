@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.attendalert.screens.GoogleSignIn
-import com.example.attendalert.screens.InsertButton
+//import com.example.attendalert.screens.InsertButton
 
 
 //@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -20,7 +20,7 @@ import com.example.attendalert.screens.InsertButton
 fun AttendAlertApp(){
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = Color.Black
     ){
 //        InsertButton()
         GoogleSignIn()
