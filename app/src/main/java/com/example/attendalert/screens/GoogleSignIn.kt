@@ -5,8 +5,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.credentials.CredentialManager
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,39 +15,38 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.attendalert.R
 import com.example.attendalert.components.HeadingTextComponent
 import com.example.attendalert.components.NormalTextComponent
+import com.example.attendalert.data.UserInformationViewModel
+import com.example.attendalert.Navigation.Screen
 import com.example.attendalert.supabase
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import io.github.jan.supabase.exceptions.RestException
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.Google
 import io.github.jan.supabase.gotrue.providers.builtin.IDToken
-import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
 import java.util.UUID
-
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 //@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
-fun GoogleSignIn (){
+fun GoogleSignIn(navController: NavHostController,viewModel: UserInformationViewModel=viewModel()) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(top = 20.dp),
@@ -66,13 +63,11 @@ fun GoogleSignIn (){
         NormalTextComponent(value = "Hey There")
         HeadingTextComponent(value = "Sign Into Your Account!")
 //            InsertButton()
-        GoogleSignInButton()
+        GoogleSignInButton(navController,viewModel)
     }
 }
-
-//@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
-fun GoogleSignInButton() {
+fun GoogleSignInButton(navController: NavHostController,viewModel: UserInformationViewModel=viewModel()) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -109,6 +104,24 @@ fun GoogleSignInButton() {
                 val email =googleIdTokenCredential.id
                 // Check if the email is from iiitvadodara.ac.in domain
                 if (email.endsWith("@iiitvadodara.ac.in")) {
+
+                    val year = email.substring(0, 4)
+                    val streamCode = email[5]
+
+                    // Determine the semester based on the year
+                    val semester = when (year) {
+                        "2024" -> 1
+                        "2023" -> 3
+                        "2022" -> 5
+                        else -> 0 // default value in case of an unexpected year
+                    }
+                    viewModel.semester=semester
+                    // Determine the stream based on the 5th character
+                    val stream = if (streamCode == '1') "CSE" else "IT"
+                    viewModel.stream=stream
+                    // Log the extracted information (for debugging purposes)
+                    Log.i(TAG, "Email: $email")
+                    Log.i(TAG, "Year: $year, Semester: $semester, Stream: $stream")
                     // Proceed with sign-in logic for valid domain
                     supabase.auth.signInWith(IDToken){
                         idToken=googleIdToken
@@ -117,6 +130,7 @@ fun GoogleSignInButton() {
                     }
                     Log.i(TAG, googleIdToken)
                     Toast.makeText(context, "Sign-in successful", Toast.LENGTH_SHORT).show()
+                    navController.navigate(Screen.Home.route)
 //                    Toast.makeText(context, "Sign-in successful", Toast.LENGTH_SHORT).show()
                 } else {
                     // Show toast for invalid domain
